@@ -7,10 +7,10 @@
         <artifactId>airqualityapp</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>favouriteservice</artifactId>
+    <artifactId>subscriptionservice</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>FavouriteService</name>
+    <name>SubscriptionService</name>
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>11</java.version>

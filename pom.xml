@@ -60,6 +60,8 @@
 
     <modules>
         <module>UserService</module>
+        <module>FavouriteService</module>
+        <module>SubscriptionService</module>
     </modules>
 
 </project>
