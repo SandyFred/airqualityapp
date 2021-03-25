@@ -1,7 +1,15 @@
 package com.team01.favouriteservice.service;
 
-import org.springframework.stereotype.Service;
+import com.team01.favouriteservice.model.Location;
 
-@Service
-public class FavouriteService {
+import java.util.List;
+
+public interface FavouriteService {
+
+    Location addFavourite(String username, Location location);
+
+    Location deleteFavourite(String username, String city);
+
+    List<Location> getFavourites(String username);
+
 }

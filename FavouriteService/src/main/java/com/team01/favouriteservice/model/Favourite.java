@@ -5,12 +5,26 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Document
+@Document(collection = "favourites")
 public class Favourite {
 
     @Id
+    private String userid;
     private String username;
     private List<Location> locations;
+
+    public Favourite(String username, List<Location> locations) {
+        this.username = username;
+        this.locations = locations;
+    }
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
 
     public String getUsername() {
         return username;
