@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.ExecutionException;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class FavouriteController {
@@ -16,7 +18,7 @@ public class FavouriteController {
     private FavouriteServiceImpl favouriteService;
 
     @GetMapping("/{username}")
-    public ResponseEntity<?> getFavourites(@PathVariable("username") String username) {
+    public ResponseEntity<?> getFavourites(@PathVariable("username") String username) throws ExecutionException, InterruptedException {
 
         return ResponseEntity.ok().body(favouriteService.getFavourites(username));
     }

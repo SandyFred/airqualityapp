@@ -1,8 +1,10 @@
 package com.team01.favouriteservice.service;
 
+import com.team01.favouriteservice.dto.AirVisual;
 import com.team01.favouriteservice.model.Location;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public interface FavouriteService {
 
@@ -10,6 +12,6 @@ public interface FavouriteService {
 
     Location deleteFavourite(String username, String city);
 
-    List<Location> getFavourites(String username);
+    List<AirVisual> getFavourites(String username) throws ExecutionException, InterruptedException;
 
 }
