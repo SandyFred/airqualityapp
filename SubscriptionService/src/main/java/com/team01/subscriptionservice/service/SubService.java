@@ -1,14 +1,16 @@
 package com.team01.subscriptionservice.service;
 
-import com.team01.subscriptionservice.repository.SubRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-@Service
-public class SubService {
+import com.team01.subscriptionservice.exception.SubscriptionsNotFoundException;
+import com.team01.subscriptionservice.model.Subscriber;
 
-    @Autowired
-    private SubRepository subRepository;
-
+public interface SubService {
     //add service methods for adding,removing and updating subscriber
+	boolean createSubcriber(Subscriber subcriber);
+	Subscriber getSubscriberById(String Id)throws SubscriptionsNotFoundException;
+	List<Subscriber> getAllSubscriber();
+	boolean removeSubscriber(String Id)throws SubscriptionsNotFoundException;
+	Subscriber updateSubscriber(Subscriber subcriber) throws SubscriptionsNotFoundException;
+	
 }
