@@ -1,5 +1,7 @@
 package com.team01.favouriteservice.controller;
 
+import com.team01.favouriteservice.exception.LocationAlreadyExistsException;
+import com.team01.favouriteservice.exception.UserNotFoundException;
 import com.team01.favouriteservice.model.Location;
 import com.team01.favouriteservice.service.FavouriteService;
 import com.team01.favouriteservice.service.FavouriteServiceImpl;
@@ -17,12 +19,18 @@ public class FavouriteController {
     @Autowired
     private FavouriteServiceImpl favouriteService;
 
+    //add failure case for usernotfoundexception
     @GetMapping("/{username}")
     public ResponseEntity<?> getFavourites(@PathVariable("username") String username) throws ExecutionException, InterruptedException {
+        try {
+            return ResponseEntity.ok().body(favouriteService.getFavourites(username));
+        } catch(UserNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
 
-        return ResponseEntity.ok().body(favouriteService.getFavourites(username));
     }
 
+    //add failure mapping for city not found
     @DeleteMapping("/{username}/{city}")
     public ResponseEntity<?> deleteFavourite(@PathVariable("username") String username,
                                              @PathVariable("city") String city) {
@@ -30,10 +38,15 @@ public class FavouriteController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    //add failure case for cityalreadyexistsexception
     @PostMapping("/{username}")
     public ResponseEntity<?> getFavourites(@PathVariable("username") String username,
                                            @RequestBody Location location) {
-
+    try {
         return ResponseEntity.ok().body(favouriteService.addFavourite(username,location));
+    } catch(LocationAlreadyExistsException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+    }
+
     }
 }
