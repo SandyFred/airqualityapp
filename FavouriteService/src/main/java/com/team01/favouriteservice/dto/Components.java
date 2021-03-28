@@ -8,6 +8,19 @@ public class Components {
     private String pm2_5;
     private String pm10;
 
+    public Components() {
+
+    }
+
+    public Components(String co, String no2, String o3, String so2, String pm2_5, String pm10) {
+        this.co = co;
+        this.no2 = no2;
+        this.o3 = o3;
+        this.so2 = so2;
+        this.pm2_5 = pm2_5;
+        this.pm10 = pm10;
+    }
+
     public String getCo() {
         return co;
     }

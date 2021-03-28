@@ -6,6 +6,10 @@ public class Location {
     private String state;
     private String city;
 
+    public Location() {
+
+    }
+
     public Location(String country, String state, String city) {
         this.country = country;
         this.state = state;

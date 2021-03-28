@@ -13,6 +13,10 @@ public class Favourite {
     private String username;
     private List<Location> locations;
 
+    public Favourite() {
+
+    }
+
     public Favourite(String username, List<Location> locations) {
         this.username = username;
         this.locations = locations;
