@@ -5,7 +5,7 @@ import java.util.Date;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
+@Document(collection = "subscription")
 public class Subscriber {
 
     @Id
@@ -14,6 +14,7 @@ public class Subscriber {
     private String subscriptionPlan;
     private Date subscriptionDate;
     private String subscriptionValidity;
+
 	public String getId() {
 		return id;
 	}

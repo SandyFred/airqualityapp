@@ -17,25 +17,36 @@ import org.springframework.web.filter.GenericFilterBean;
 
 public class JwtFilter extends GenericFilterBean {
 	@Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-    	HttpServletRequest req = (HttpServletRequest) request;
-		HttpServletResponse res = (HttpServletResponse) response;
-		final String authHeader = req.getHeader("authorization");
-		if ("OPTIONS".equals(req.getMethod())) {
-			res.setStatus(HttpServletResponse.SC_OK);
-			chain.doFilter(req, res);
-		} 
-		else {
-			if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-				throw new ServletException("Missing or invalid Authorization header");
+		HttpServletRequest hreq = (HttpServletRequest) request;
+		HttpServletResponse hres = (HttpServletResponse) response;
+
+		String authHeader = hreq.getHeader("authorization");
+
+		if ("OPTIONS".equals(hreq.getMethod())) {
+			hres.setStatus(HttpServletResponse.SC_OK);
+			chain.doFilter(request, response);
+		} else {
+
+			try {
+				String token = authHeader.split(" ")[1];
+				System.out.println(authHeader);
+				System.out.println(token);
+				Claims claims = Jwts.parser().setSigningKey("secretkey")
+						.parseClaimsJws(token).getBody();
+				System.out.println(claims.getIssuer());
+				System.out.println(claims.getSubject());
+				request.setAttribute("claims", claims);
+				chain.doFilter(request, response);
+
+			} catch (Exception e) {
+				hres.sendError(401,"Token Expired");
+				System.out.println(e.getMessage());
+				System.out.println("Access denied");
 			}
-			final String token = authHeader.substring(7);
-			final Claims claims = Jwts.parser().setSigningKey("secretkey").parseClaimsJws(token).getBody();
-			request.setAttribute("claims", claims);
-			chain.doFilter(req, res);
+
 		}
 
-
-    }
+	}
 }

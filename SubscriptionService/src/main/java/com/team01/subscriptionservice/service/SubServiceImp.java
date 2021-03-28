@@ -17,9 +17,8 @@ public class SubServiceImp implements SubService
 {
 	
 		 @Autowired
-		 private SubRepository subRepository;
-		 
-		 Subscriber subscriber = null;
+		 private final SubRepository subRepository;
+
 		 List<Subscriber> subscriptionList = null;
 		 SubServiceImp(SubRepository subRepository){
 			 this.subRepository = subRepository;
@@ -34,12 +33,8 @@ public class SubServiceImp implements SubService
 			 else {
 				 
 				 subscriber.setSubscriptionDate(new Date());
-				 if(subRepository.save(subscriber) != null) {
-					 return true;
-				 }
-				 else {
-					 return false;
-				 }
+				 subRepository.save(subscriber);
+				 return true;
 			 }
 		 }
 		//getAllSubscriber
@@ -53,8 +48,7 @@ public class SubServiceImp implements SubService
 		 public Subscriber getSubscriberById(String Id) throws SubscriptionsNotFoundException{
 			try {
 				
-					Subscriber subscriber =  subRepository.findById(Id).get();
-				return subscriber;
+					return subRepository.findById(Id).get();
 			}
 			catch(NoSuchElementException e) {
 				throw new SubscriptionsNotFoundException("Subscription not found");

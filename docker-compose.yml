@@ -1,0 +1,42 @@
+version: '3'
+services:
+  user-auth-mysql:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: userAuth
+
+  user-service:
+    image: user-service
+    build:
+      context: UserService/
+    depends_on:
+      - user-auth-mysql
+    ports:
+      - "8080:8080"
+    environment:
+      - DATABASE_HOST=user-auth-mysql
+      - DATABASE_USER=root
+      - DATABASE_PASSWORD=root
+      - DATABASE_NAME=userAuth
+      - DATABASE_PORT=3306
+    restart: always
+
+  favourite-service:
+    image: fav-service
+    build:
+      context: FavouriteService/
+    ports:
+      - "8081:8081"
+    restart: always
+
+  sub-service:
+    image: sub-service
+    build:
+      context: SubscriptionService/
+    ports:
+      - "8082:8082"
+    restart: always
