@@ -72,8 +72,8 @@ public class UserAuthenticationController {
 	@PostMapping("/login")
 	public ResponseEntity<String> login(@RequestBody User user) {
 		try {
-			authService.findByUserIdAndPassword(user.getUserId(), user.getUserPassword());
-			return new ResponseEntity<String>(getToken(user.getUserId(), user.getUserPassword()), HttpStatus.OK);
+			authService.findByUserEmailAndPassword(user.getUserEmail(), user.getUserPassword());
+			return new ResponseEntity<String>(getToken(user.getUserEmail(), user.getUserPassword()), HttpStatus.OK);
 		} catch (UserNotFoundException e) {
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.UNAUTHORIZED);
 		} catch (Exception e) {

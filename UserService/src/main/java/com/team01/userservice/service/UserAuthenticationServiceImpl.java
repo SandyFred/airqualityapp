@@ -26,6 +26,13 @@ public class UserAuthenticationServiceImpl implements UserAuthenticationService 
 		}
 		return user;
 	}
+	public User findByUserEmailAndPassword(String userEmail, String password) throws UserNotFoundException{
+		User user=userAuthRepository.findByUserEmailAndUserPassword(userEmail, password);
+		if(user ==null) {
+			throw new UserNotFoundException("User is not found");
+		}
+		return user;
+	}
 
 
 	@Override

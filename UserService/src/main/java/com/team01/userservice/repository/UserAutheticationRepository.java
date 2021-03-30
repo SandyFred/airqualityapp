@@ -7,4 +7,6 @@ import com.team01.userservice.model.User;
 public interface UserAutheticationRepository extends JpaRepository<User, String> {
     
     User findByUserIdAndUserPassword(String userId, String userPassword);
+
+	User findByUserEmailAndUserPassword(String userEmail, String password);
 }
