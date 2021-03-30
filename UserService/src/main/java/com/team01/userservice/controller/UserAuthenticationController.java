@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +39,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @RestController
 @RequestMapping("/api/v1/auth")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserAuthenticationController {
 
 	@Autowired
@@ -58,19 +60,14 @@ public class UserAuthenticationController {
 //	}
 	
 	@PostMapping("/register")
-    public ResponseEntity<String> register(User user,@RequestParam("image") MultipartFile multipartFile) throws IOException {
+	public ResponseEntity<String> register(@RequestBody User user) throws IOException {
         try {
-	        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-	        user.setprofilePictureUrl(fileName);
 	        authService.saveUser(user);
-	        String uploadDir = "user-photos/" + user.getUserId();
-	        saveFile(uploadDir, fileName, multipartFile);
 	        return new ResponseEntity<String>("Created", HttpStatus.CREATED);
         } catch (UserAlreadyExistsException e) {
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.UNAUTHORIZED);
 		}
     }
-	
 
 	@PostMapping("/login")
 	public ResponseEntity<String> login(@RequestBody User user) {
@@ -84,19 +81,19 @@ public class UserAuthenticationController {
 		}
 	}
 	
-	//save image to directory
-	public static void saveFile(String uploadDir, String fileName, MultipartFile multipartFile) throws IOException {
-        Path uploadPath = Paths.get(uploadDir);
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
-        }
-        try (InputStream inputStream = multipartFile.getInputStream()) {
-            Path filePath = uploadPath.resolve(fileName);
-            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {        
-            throw new IOException("Could not save image file: " + fileName, e);
-        }
-	}
+//	//save image to directory
+//	public static void saveFile(String uploadDir, String fileName, MultipartFile multipartFile) throws IOException {
+//        Path uploadPath = Paths.get(uploadDir);
+//        if (!Files.exists(uploadPath)) {
+//            Files.createDirectories(uploadPath);
+//        }
+//        try (InputStream inputStream = multipartFile.getInputStream()) {
+//            Path filePath = uploadPath.resolve(fileName);
+//            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+//        } catch (IOException e) {        
+//            throw new IOException("Could not save image file: " + fileName, e);
+//        }
+//	}
 
 	// Generate JWT token
 	public String getToken(String userId, String password) throws Exception {

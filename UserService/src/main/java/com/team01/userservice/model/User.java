@@ -19,14 +19,6 @@ public class User {
     private String profilePictureUrl;
 
 
-    public User(String userId, String userPassword, String userEmail, String profilePictureUrl) {
-        super();
-        this.userId = userId;
-        this.userPassword = userPassword;
-        this.userEmail = userEmail;
-        this.profilePictureUrl = profilePictureUrl;
-    }
-
     public String getUserId() {
         return userId;
     }
