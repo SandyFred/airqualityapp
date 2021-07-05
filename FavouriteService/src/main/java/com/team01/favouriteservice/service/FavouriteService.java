@@ -15,6 +15,6 @@ public interface FavouriteService {
 
     Location deleteFavourite(String username, String city);
 
-    List<Response> getFavourites(String username) throws ExecutionException, InterruptedException, UserNotFoundException;
+    List<AirVisual> getFavourites(String username) throws ExecutionException, InterruptedException, UserNotFoundException;
 
 }

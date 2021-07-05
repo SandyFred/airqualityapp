@@ -64,30 +64,30 @@ public class FavouriteServiceImpl implements FavouriteService {
     }
 
     @Override
-    public List<Response> getFavourites(String username) throws ExecutionException, InterruptedException, UserNotFoundException {
+    public List<AirVisual> getFavourites(String username) throws ExecutionException, InterruptedException, UserNotFoundException {
         try {
             Favourite fav = favouriteRepository.findByUsername(username);
             List<AirVisual> airVisualData = getAirVisualData(fav.getLocations());
-            ArrayList<ArrayList<Double>> coordinatesList = new ArrayList<>();
-            List<Response> apiResponse = new ArrayList<>();
-
-            for (AirVisual airVisual : airVisualData) {
-                coordinatesList.add(airVisual.getData().getLocation().getCoordinates());
-            }
-            List<OpenWeather> openData = getOpenApiData(coordinatesList);
-            Iterator<AirVisual> itair = airVisualData.listIterator();
-            Iterator<OpenWeather> itopen = openData.listIterator();
-            while (itair.hasNext() && itopen.hasNext()) {
-                AirVisual air = itair.next();
-                OpenWeather open = itopen.next();
-                Response response = new Response(air.getData().getCountry(),
-                        air.getData().getState(),
-                        air.getData().getCity(),
-                        air.getData().getCurrent().getPollution().getAqius(),
-                        open.getList().get(0).getComponents());
-                apiResponse.add(response);
-            }
-            return apiResponse;
+//            ArrayList<ArrayList<Double>> coordinatesList = new ArrayList<>();
+//            List<Response> apiResponse = new ArrayList<>();
+//
+//            for (AirVisual airVisual : airVisualData) {
+//                coordinatesList.add(airVisual.getData().getLocation().getCoordinates());
+//            }
+//            List<OpenWeather> openData = getOpenApiData(coordinatesList);
+//            Iterator<AirVisual> itair = airVisualData.listIterator();
+//            Iterator<OpenWeather> itopen = openData.listIterator();
+//            while (itair.hasNext() && itopen.hasNext()) {
+//                AirVisual air = itair.next();
+//                OpenWeather open = itopen.next();
+//                Response response = new Response(air.getData().getCountry(),
+//                        air.getData().getState(),
+//                        air.getData().getCity(),
+//                        air.getData().getCurrent().getPollution().getAqius(),
+//                        open.getList().get(0).getComponents());
+//                apiResponse.add(response);
+            //}
+            return airVisualData;
         } catch(NullPointerException e) {
             throw new UserNotFoundException("User doesnt have favourites");
         }

@@ -97,8 +97,11 @@ public class UserAuthenticationController {
 
 	// Generate JWT token
 	public String getToken(String userId, String password) throws Exception {
-		return Jwts.builder().setId(userId).setSubject(password).setIssuedAt(new Date())
-				.signWith(SignatureAlgorithm.HS256, "secretkey").compact();
+		return Jwts.builder().setSubject(userId)
+				.setIssuer("AirQualityApp")
+				.setExpiration(new Date(System.currentTimeMillis()+3000000))
+				.signWith(SignatureAlgorithm.HS256, "secretkey")
+				.compact();
 
 	}
 	
